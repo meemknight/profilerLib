@@ -20,11 +20,11 @@ namespace PL
 
 	struct ProfileRezults
 	{
-		float time;
-		float cpuClocks;
+		float timeSeconds;
+		unsigned int cpuClocks;
 	};
 
-	struct SingleProfiler
+	struct Profiler
 	{
 
 		LARGE_INTEGER startTime = {};
@@ -48,7 +48,7 @@ namespace PL
 
 			ProfileRezults r = {};
 
-			r.time = (float)startTime.QuadPart / (float)freq.perfFreq.QuadPart;
+			r.timeSeconds = (float)startTime.QuadPart / (float)freq.perfFreq.QuadPart;
 			r.cpuClocks = cycleCount;
 
 			return r;
@@ -63,7 +63,7 @@ namespace PL
 		ProfileRezults rezults[AverageProfilerMaxTests];
 		int index = 0;
 
-		SingleProfiler profiler;
+		Profiler profiler;
 
 		void start()
 		{
@@ -90,17 +90,17 @@ namespace PL
 				return { 0,0 };
 			}
 
-			long double time;
-			unsigned long cpuTime;
+			long double time = 0;
+			unsigned long cpuTime = 0;
 
 			for(int i=0;i<index;i++)
 			{
-				time += rezults[i].time;
+				time += rezults[i].timeSeconds;
 				cpuTime += rezults[i].cpuClocks;
 			}
 
 
-			return { time / (float)index, cpuTime / (float)index };
+			return { (float)(time / index), cpuTime /index };
 		}
 		
 		void resetData()
