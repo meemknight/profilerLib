@@ -2,6 +2,8 @@
 #include <intrin.h>
 #include <Windows.h>
 
+
+
 namespace PL 
 {
 	struct PerfFreqvency
