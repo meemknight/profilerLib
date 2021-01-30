@@ -1,0 +1,10 @@
+
+#builds
+bin/
+binInt/
+
+#visual studio
+**.user
+.vs/
+
+dependences/
