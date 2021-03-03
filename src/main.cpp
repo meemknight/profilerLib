@@ -3,9 +3,10 @@
 
 #include "profilerLib.h"
 
+
 int main()
 {
-
+	//how to use the profiler
 	PL::Profiler profiler;
 
 	profiler.start();
@@ -15,7 +16,9 @@ int main()
 	auto r = profiler.end();
 
 	std::cout << r.timeSeconds << "  " << r.cpuClocks << "\n";
-	
+
+
+	//the average profiler can run multiple tests and average then.
 	PL::AverageProfiler aProfiler;
 
 	for(int i=0;i<5;i++)
@@ -25,10 +28,11 @@ int main()
 		aProfiler.end();
 	}
 	
+
+	//you can also use aProfiler.getAverageNoResetData and not reset the data
 	r = aProfiler.getAverageAndResetData();
 	std::cout << r.timeSeconds << "  " << r.cpuClocks << "\n";
 
-	system("pause");
 
 	return 0;
 }

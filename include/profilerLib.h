@@ -4,10 +4,28 @@
 
 ///////////////////////////////////////////
 //https://github.com/meemknight/profilerLib
+//do not remove this notice
+//(c) Luta Vlad
 ///////////////////////////////////////////
+
+
+//set this to true to remove the implementation
+//usefull to quickly remove debug and profile cod and to port to
+//other platforms
+#define PROFILER_LIB_REMOVE_IMPLEMENTATION 0
+
 
 namespace PL 
 {
+
+	struct ProfileRezults
+	{
+		float timeSeconds;
+		unsigned int cpuClocks;
+	};
+
+#if !PROFILER_LIB_REMOVE_IMPLEMENTATION
+
 	struct PerfFreqvency
 	{
 		PerfFreqvency()
@@ -17,16 +35,8 @@ namespace PL
 
 		LARGE_INTEGER perfFreq;
 	};
-
 	const static PerfFreqvency freq;
 
-
-
-	struct ProfileRezults
-	{
-		float timeSeconds;
-		unsigned int cpuClocks;
-	};
 
 	struct Profiler
 	{
@@ -121,4 +131,57 @@ namespace PL
 
 
 	};
+
+#else
+
+	struct Profiler
+	{
+	
+		
+		void start()
+		{
+			
+		}
+	
+		ProfileRezults end()
+		{	
+			return {};
+		}
+	
+	};
+	
+	
+	struct AverageProfiler
+	{
+		
+		void start()
+		{
+		}
+	
+		ProfileRezults end()
+		{
+			return {};
+		}
+	
+		ProfileRezults getAverageNoResetData()
+		{
+			
+			return {};
+		}
+	
+		void resetData()
+		{
+		}
+	
+		ProfileRezults getAverageAndResetData()
+		{
+			return {};
+		}
+	
+	};
+
+
+
+#endif
+
 };
