@@ -12,7 +12,10 @@
 //set this to true to remove the implementation
 //usefull to quickly remove debug and profile cod and to port to
 //other platforms
+//the code that uses this library will still compile but won't do anything
 #define PROFILER_LIB_REMOVE_IMPLEMENTATION 0
+
+#define PROFILER_LIB_AVERAGE_PROFILER_MAX_TESTS 200
 
 
 namespace PL 
@@ -20,8 +23,8 @@ namespace PL
 
 	struct ProfileRezults
 	{
-		float timeSeconds;
-		unsigned int cpuClocks;
+		float timeSeconds=0;
+		unsigned int cpuClocks=0;
 	};
 
 #if !PROFILER_LIB_REMOVE_IMPLEMENTATION
@@ -70,11 +73,10 @@ namespace PL
 
 	};
 
-	const int AverageProfilerMaxTests = 200;
 
 	struct AverageProfiler
 	{
-		ProfileRezults rezults[AverageProfilerMaxTests];
+		ProfileRezults rezults[PROFILER_LIB_AVERAGE_PROFILER_MAX_TESTS];
 		int index = 0;
 
 		Profiler profiler;
@@ -88,7 +90,7 @@ namespace PL
 		{
 			auto r = profiler.end();
 			
-			if(index < AverageProfilerMaxTests)
+			if(index < PROFILER_LIB_AVERAGE_PROFILER_MAX_TESTS)
 			{
 				rezults[index] = r;
 				index++;
@@ -136,7 +138,6 @@ namespace PL
 
 	struct Profiler
 	{
-	
 		
 		void start()
 		{
@@ -165,7 +166,6 @@ namespace PL
 	
 		ProfileRezults getAverageNoResetData()
 		{
-			
 			return {};
 		}
 	
