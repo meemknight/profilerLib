@@ -21,6 +21,8 @@
 namespace PL 
 {
 
+	//todo port to linux
+
 	struct ProfileRezults
 	{
 		float timeSeconds=0;
