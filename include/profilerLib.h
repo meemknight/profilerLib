@@ -1,11 +1,16 @@
 #pragma once
 #include <intrin.h>
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <Windows.h>
 
 ///////////////////////////////////////////
 //https://github.com/meemknight/profilerLib
 //do not remove this notice
 //(c) Luta Vlad
+// 
+// 1.0.0
+// 
 ///////////////////////////////////////////
 
 
