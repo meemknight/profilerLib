@@ -1,15 +1,13 @@
 #pragma once
 #include <intrin.h>
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <Windows.h>
+#include <chrono>
 
 ///////////////////////////////////////////
 //https://github.com/meemknight/profilerLib
 //do not remove this notice
 //(c) Luta Vlad
 // 
-// 1.0.0
+// 1.0.1
 // 
 ///////////////////////////////////////////
 
@@ -26,7 +24,6 @@
 namespace PL 
 {
 
-	//todo port to linux
 
 	struct ProfileRezults
 	{
@@ -36,43 +33,37 @@ namespace PL
 
 #if !PROFILER_LIB_REMOVE_IMPLEMENTATION
 
-	struct PerfFreqvency
-	{
-		PerfFreqvency()
-		{
-			QueryPerformanceFrequency(&perfFreq);
-		}
-
-		LARGE_INTEGER perfFreq;
-	};
-	const static PerfFreqvency freq;
-
+	
 
 	struct Profiler
 	{
 
-		LARGE_INTEGER startTime = {};
+		std::chrono::steady_clock::time_point startTime;
 		__int64 cycleCount = {};
 
 		void start()
 		{
-			QueryPerformanceCounter(&startTime);
+			startTime = std::chrono::high_resolution_clock::now();
 			cycleCount = __rdtsc();
 		}
 
 		ProfileRezults end()
 		{
 			__int64 endCycleCount = __rdtsc();
-			LARGE_INTEGER endTime;
-			QueryPerformanceCounter(&endTime);
+
+			auto endTime = std::chrono::high_resolution_clock::now();
 
 			cycleCount = endCycleCount - cycleCount;
-			startTime.QuadPart = endTime.QuadPart - startTime.QuadPart;
+			
+			
+			auto duration = 
+				std::chrono::duration_cast< std::chrono::duration<float > >
+				(endTime - startTime);
 
 
 			ProfileRezults r = {};
 
-			r.timeSeconds = (float)startTime.QuadPart / (float)freq.perfFreq.QuadPart;
+			r.timeSeconds = duration.count();
 			r.cpuClocks = cycleCount;
 
 			return r;

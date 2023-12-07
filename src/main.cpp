@@ -32,7 +32,8 @@ int main()
 	//you can also use aProfiler.getAverageNoResetData and not reset the data
 	r = aProfiler.getAverageAndResetData();
 	std::cout << r.timeSeconds << "  " << r.cpuClocks << "\n";
-
+	std::cin.ignore();
+	std::cin.get();
 
 	return 0;
 }
